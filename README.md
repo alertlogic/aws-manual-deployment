@@ -3,7 +3,7 @@
 Collection of Terraform modules to manually deploy Vulnerability Scanning and IDS required infrastructure into an existing customer managed subnet in AWS.
 
 - [Overview](#overview)
-- [Use Case: Customer provided subnets](#use-case-customer-provided-subnets)
+- [Use Case: Customer provided subnet](#use-case-customer-provided-subnet)
 - [How to Use](#how-to-use)
 - [Appendix A](#appendix-a-resource-properties)
 
