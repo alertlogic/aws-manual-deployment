@@ -33,62 +33,76 @@ Provider configuration:
 
 // Specify the provider and alternative access details below if needed
 provider "aws" {
-  profile = "${var.aws_profile}"
+  profile                 = "${var.aws_profile}"
   shared_credentials_file = "${var.aws_cred_file}"
-  region = "${var.aws_region}"
-  version = ">= 1.6"
+  region                  = "${var.aws_region}"
+  version                 = ">= 1.6"
 }
+
 provider "template" {
-    version = "~> 1.0"
+  version = "~> 1.0"
 }
 
 module "ci_scan" {
   source = "module/ci_scan"
 
-  account_id = "${var.account_id}"
-  deployment_id = "${var.deployment_id}"
-  stack = "${var.stack}"
-  vpc_id = "${var.vpc_id}"
-  subnet_id = "${var.subnet_id}"
-  subnet_type = "${var.subnet_type}"
-  vpc_cidr = "${var.vpc_cidr}"
-  availability_zones = "${var.availability_zones}"
-  ci_instance_type = "${var.ci_instance_type}"
+  account_id          = "${var.account_id}"
+  deployment_id       = "${var.deployment_id}"
+  stack               = "${var.stack}"
+  vpc_id              = "${var.vpc_id}"
+  subnet_id           = "${var.subnet_id}"
+  subnet_type         = "${var.subnet_type}"
+  vpc_cidr            = "${var.vpc_cidr}"
+  ci_instance_type    = "${var.ci_instance_type}"
   ci_appliance_number = "${var.ci_appliance_number}"
 }
 
 module "ids" {
   source = "module/ids"
 
-  account_id = "${var.account_id}"
-  deployment_id = "${var.deployment_id}"
-  create_ids = "${var.create_ids}"
-  vpc_id = "${var.vpc_id}"
-  subnet_id = "${var.subnet_id}"
-  subnet_type = "${var.subnet_type}"
-  vpc_cidr = "${var.vpc_cidr}"
-  availability_zones = "${var.availability_zones}"
-  ids_instance_type = "${var.ids_instance_type}"
+  account_id           = "${var.account_id}"
+  deployment_id        = "${var.deployment_id}"
+  create_ids           = "${var.create_ids}"
+  vpc_id               = "${var.vpc_id}"
+  subnet_id            = "${var.subnet_id}"
+  subnet_type          = "${var.subnet_type}"
+  vpc_cidr             = "${var.vpc_cidr}"
+  availability_zone    = "${var.availability_zone}"
+  ids_instance_type    = "${var.ids_instance_type}"
   ids_appliance_number = "${var.ids_appliance_number}"
 }
 
 variable "aws_profile" {}
-variable "aws_cred_file" {}
-variable "aws_region" {}
-variable "account_id" {}
-variable "deployment_id" {}
-variable "stack" {}
-variable "create_ids" {}
-variable "vpc_id" {}
-variable "vpc_cidr" {}
-variable "subnet_id" {}
-variable "availability_zones" {}
-variable "subnet_type" {}
-variable "ci_instance_type" {}
-variable "ci_appliance_number" {}
-variable "ids_instance_type" {}
-variable "ids_appliance_number" {}
 
+variable "aws_cred_file" {}
+
+variable "aws_region" {}
+
+variable "account_id" {}
+
+variable "deployment_id" {}
+
+variable "stack" {}
+
+variable "create_ids" {}
+
+variable "vpc_id" {}
+
+variable "vpc_cidr" {}
+
+variable "subnet_id" {}
+
+variable "availability_zone" {}
+
+variable "subnet_type" {}
+
+variable "ci_instance_type" {}
+
+variable "ci_appliance_number" {}
+
+variable "ids_instance_type" {}
+
+variable "ids_appliance_number" {}
 
 output "ProtectedAccount:" {
   value = "${module.ci_scan.ProtectedAccount}"
