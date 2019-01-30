@@ -50,8 +50,8 @@ module "ci_scan" {
   deployment_id       = "${var.deployment_id}"
   stack               = "${var.stack}"
   vpc_id              = "${var.vpc_id}"
-  subnet_id           = "${var.subnet_id}"
-  subnet_type         = "${var.subnet_type}"
+  ci_subnet_id        = "${var.ci_subnet_id}"
+  ci_subnet_type      = "${var.ci_subnet_type}"
   vpc_cidr            = "${var.vpc_cidr}"
   ci_instance_type    = "${var.ci_instance_type}"
   ci_appliance_number = "${var.ci_appliance_number}"
@@ -64,10 +64,9 @@ module "ids" {
   deployment_id        = "${var.deployment_id}"
   create_ids           = "${var.create_ids}"
   vpc_id               = "${var.vpc_id}"
-  subnet_id            = "${var.subnet_id}"
-  subnet_type          = "${var.subnet_type}"
+  ids_subnet_id       = "${var.ids_subnet_id}"
+  ids_subnet_type      = "${var.ids_subnet_type}"
   vpc_cidr             = "${var.vpc_cidr}"
-  availability_zone    = "${var.availability_zone}"
   ids_instance_type    = "${var.ids_instance_type}"
   ids_appliance_number = "${var.ids_appliance_number}"
 }
@@ -90,11 +89,15 @@ variable "vpc_id" {}
 
 variable "vpc_cidr" {}
 
-variable "subnet_id" {}
+variable "ci_subnet_id" {}
 
-variable "availability_zone" {}
+variable "ids_subnet_id" {
+  type = "list"
+}
 
-variable "subnet_type" {}
+variable "ci_subnet_type" {}
+
+variable "ids_subnet_type" {}
 
 variable "ci_instance_type" {}
 
@@ -112,8 +115,12 @@ output "ProtectedVPC:" {
   value = "${module.ci_scan.ProtectedVPC}"
 }
 
-output "DeployedInSubnetID:" {
-  value = "${module.ci_scan.DeployedInSubnetID}"
+output "ScannerDeployedInSubnetID:" {
+  value = "${module.ci_scan.ScannerDeployedInSubnetID}"
+}
+
+output "IDSDeployedInSubnetIDs:" {
+  value = "${module.ids.IDSDeployedInSubnetIDs}"
 }
 
 output "NumberOfSecurityAppliancesDeployed:" {

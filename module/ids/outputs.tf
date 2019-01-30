@@ -14,6 +14,6 @@ output "IDSSecurityGroupID" {
   value = "${aws_security_group.ids_appliance_sg.*.id}"
 }
 
-output "DeployedInSubnetID" {
-  value = "${var.subnet_id}/${var.subnet_type}"
+output "IDSDeployedInSubnetIDs" {
+  value = "${var.ids_subnet_id}"
 }

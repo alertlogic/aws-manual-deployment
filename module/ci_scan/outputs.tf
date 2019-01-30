@@ -14,6 +14,6 @@ output "CISecurityGroupID" {
   value = "${aws_security_group.ci_appliance_sg.id}"
 }
 
-output "DeployedInSubnetID" {
-  value = "${var.subnet_id}/${var.subnet_type}"
+output "ScannerDeployedInSubnetID" {
+  value = "${var.ci_subnet_id}/${var.ci_subnet_type}"
 }

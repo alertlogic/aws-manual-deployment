@@ -10,21 +10,18 @@ variable "vpc_id" {
   description = "Specify the VPC ID where the appliance will be deployed in."
 }
 
-variable "subnet_id" {
-  description = "Specify the existing subnet ID where the appliance will be deployed in."
+variable "ids_subnet_id" {
+  description = "Specify the existing subnet ID(s) where the appliance will be deployed in."
+  type        = "list"
 }
 
-variable "subnet_type" {
+variable "ids_subnet_type" {
   description = "Select if the subnet is a public or private subnet. Enter Public or Private"
 }
 
 variable "vpc_cidr" {
   description = "CIDR netblock of the VPC to be monitored (Where agents will be installed)."
   type        = "string"
-}
-
-variable "availability_zone" {
-  description = "Select target AZ matching selected subnet ID."
 }
 
 variable "ids_instance_type" {

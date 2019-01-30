@@ -15,11 +15,11 @@ variable "vpc_id" {
   description = "Specify the VPC ID where the appliance will be deployed in."
 }
 
-variable "subnet_id" {
-  description = "Specify the existing subnet ID where the appliance will be deployed in."
+variable "ci_subnet_id" {
+  description = "Specify the existing subnet ID where the Scanning appliance will be deployed in."
 }
 
-variable "subnet_type" {
+variable "ci_subnet_type" {
   description = "Select if the subnet is a public or private subnet. Enter Public or Private"
 }
 
