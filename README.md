@@ -17,7 +17,7 @@ The template included here will take care of the creation of the whole infrastru
 
 In this use case, the customer provides an existing subnet where the appliances are going to be deployed in.
 
-__NOTE__: It is the customer's responsibility to properly configure network access to the chosen subnet. This includes management of IGW, Routes, NACLs and NAT associated with the existing subnet. Scan and IDS appliances must be able to communicate with our Datacenters via IGW or NAT Gateway/NAT instance.
+**NOTE**: It is the customer's responsibility to properly configure network access to the chosen subnet. This includes management of IGW, Routes, NACLs and NAT associated with the existing subnet. Scan and IDS appliances must be able to communicate with our Datacenters via IGW or NAT Gateway/NAT instance.
 
 ### Requirements
 
@@ -30,7 +30,7 @@ In order to deploy the appliances these requirements must be done prior:
 
 ### Variables
 
-```
+```h
 aws_profile = "aws_profile" // The AWS profile configured for credentials OR matching AWS_PROFILE environment variable
 aws_cred_file = "~/.aws/credentials" // An AWS credentials file to specify your credentials
 aws_region = "xx-xxxx-x" // The AWS region to deploy the appliance in
@@ -64,33 +64,35 @@ The template will create the following resources in each Subnet provided (see [A
 
 1. clone or download the entire repository to your working directory, i.e. ~/aws-manual-deployment
 
-```
-├── deploy.tf
-├── module
-│   ├── ci_scan
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── userdata.tpl
-│   │   └── variables.tf
-│   └── ids
-│       ├── main.tf
-│       ├── outputs.tf
-│       └── variables.tf
-├── README.md
-└── vars.tfvars
+   ```text
+   ├── deploy.tf
+   ├── module
+   │   ├── ci_scan
+   │   │   ├── main.tf
+   │   │   ├── outputs.tf
+   │   │   ├── userdata.tpl
+   │   │   └── variables.tf
+   │   └── ids
+   │       ├── main.tf
+   │       ├── outputs.tf
+   │       └── variables.tf
+   ├── README.md
+   └── vars.tfvars
 
-3 directories, 10 files
-```
+   3 directories, 10 files
+   ```
 
 2. add all the required variable values in a separate file under the same directory, i.e. vars.tfvars
 3. run Terraform initialization and apply to create the security resources in AWS:
-```
-   terraform init
-   terraform apply -var-file=vars.tfvars
-```
-__Provider configuration:__
- The configuration applied to this terraform uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
- Variables can be loaded from separate file or passed as parameters. See https://www.terraform.io/docs/providers/aws/#authentication for more options.
+
+   ```bash
+      terraform init
+      terraform apply -var-file=vars.tfvars
+   ```
+
+   **Provider configuration:**
+   The configuration applied to this terraform uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
+   Variables can be loaded from separate file or passed as parameters. See <https://www.terraform.io/docs/providers/aws/#authentication> for more options.
 
 ## Appendix A: Resource properties
 
@@ -100,87 +102,87 @@ This section provides details about each resource created by the template.
 
 All resources created will have a set of shared tags as shown in the next table:
 
-| Tag Name | Tag Value |
-|----------|-----------|
-| AlertLogic-AccountID | \<AccountId\> |
-| AlertLogic-EnvironmentID | \<DeploymentId\> |
-| AlertLogic | Security |
-| Alertlogic Security/IDS Manual Mode Template Version | vx.x.x |
+| Tag Name                                             | Tag Value        |
+| ---------------------------------------------------- | ---------------- |
+| AlertLogic-AccountID                                 | \<AccountId\>    |
+| AlertLogic-EnvironmentID                             | \<DeploymentId\> |
+| AlertLogic                                           | Security         |
+| Alertlogic Security/IDS Manual Mode Template Version | vx.x.x           |
 
-__NOTE__: A unique tag `Name` will be set per resource type.
+**NOTE**: A unique tag `Name` will be set per resource type.
 
 ### Security Group
 
 Every security group is configured to have following attributes:
 
-| Attribute Name | Attribute Value |
-|----------------|-----------------|
-| name | AlertLogic Security/IDS Security Group \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
-| description | AlertLogic Security/IDS Security Group |
+| Attribute Name | Attribute Value                                                                          |
+| -------------- | ---------------------------------------------------------------------------------------- |
+| name           | AlertLogic Security/IDS Security Group \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
+| description    | AlertLogic Security/IDS Security Group                                                   |
 
 Following tags will be set on every security group:
 
-| Tag Name | Tag Value |
-|----------|-----------|
-| Name | AlertLogic Security/IDS Security Group \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
+| Tag Name | Tag Value                                                                                |
+| -------- | ---------------------------------------------------------------------------------------- |
+| Name     | AlertLogic Security/IDS Security Group \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
 
 As appliances needs to connect to Alert Logic back-end as well as access to customer infrastructure inside a VPC, the following rules are configured (taken from [here](https://docs.alertlogic.com/requirements/cloud/amazon-web-services-threat-manager-requirements.htm)):
 
 _For Scanning:_
 
-| direction | protocol | ports | CIDR | Notes |
-|-----------|----------|-------|------|-------|
-| out | tcp | 22 | 0.0.0.0/0 | To connect to the backend and download scanning software |
-| out | tcp | 53 | 0.0.0.0/0 | DNS operations |
-| out | tcp | 80 | 0.0.0.0/0 | Appliance updates to backend over HTTP |
-| out | tcp | 443 | 0.0.0.0/0 | Appliance updates to backend over HTTPs |
-| out | udp | 53 | 0.0.0.0/0 | DNS operations |
-| out | all | all | \<VpcCidrBlock\> | Internal scans functionality |
+| direction | protocol | ports | CIDR             | Notes                                                    |
+| --------- | -------- | ----- | ---------------- | -------------------------------------------------------- |
+| out       | tcp      | 22    | 0.0.0.0/0        | To connect to the backend and download scanning software |
+| out       | tcp      | 53    | 0.0.0.0/0        | DNS operations                                           |
+| out       | tcp      | 80    | 0.0.0.0/0        | Appliance updates to backend over HTTP                   |
+| out       | tcp      | 443   | 0.0.0.0/0        | Appliance updates to backend over HTTPs                  |
+| out       | udp      | 53    | 0.0.0.0/0        | DNS operations                                           |
+| out       | all      | all   | \<VpcCidrBlock\> | Internal scans functionality                             |
 
 _For IDS:_
 
-| direction | protocol | ports | CIDR | Notes |
-|-----------|----------|-------|------|-------|
-| in | tcp | 443 | \<VpcCidrBlock\> | Agent updates (single point of egress only) |
-| in | tcp | 7777 | \<VpcCidrBlock\> | Agent network data transport |
-| out | tcp | 53 | \<GoogleDNS\> | DNS operations |
-| out | tcp | 80 | 0.0.0.0/0 | Appliance updates to backend |
-| out | tcp | 443 | \<AlertLogicDC\> | Appliance updates to backend |
-| out | tcp | 4138 | \<AlertLogicDC\> | Event transport to backend |
-| out | udp | 53 | \<GoogleDNS\> | DNS operations |
-| out | udp | 123 | \<AlertLogicDC\> | NTP sync |
+| direction | protocol | ports | CIDR             | Notes                                       |
+| --------- | -------- | ----- | ---------------- | ------------------------------------------- |
+| in        | tcp      | 443   | \<VpcCidrBlock\> | Agent updates (single point of egress only) |
+| in        | tcp      | 7777  | \<VpcCidrBlock\> | Agent network data transport                |
+| out       | tcp      | 53    | \<GoogleDNS\>    | DNS operations                              |
+| out       | tcp      | 80    | 0.0.0.0/0        | Appliance updates to backend                |
+| out       | tcp      | 443   | \<AlertLogicDC\> | Appliance updates to backend                |
+| out       | tcp      | 4138  | \<AlertLogicDC\> | Event transport to backend                  |
+| out       | udp      | 53    | \<GoogleDNS\>    | DNS operations                              |
+| out       | udp      | 123   | \<AlertLogicDC\> | NTP sync                                    |
 
 ### Security Launch Configuration
 
 Every launch configuration is configured to have following attributes:
 
-| Attribute Name | Attribute Value |
-|----------------|-----------------|
-| name | AlertLogic Security/IDS Launch Configuration \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
-| description | AlertLogic Launch Configuration for Security/IDS |
-| image_id | AMI ID depends on the region and is preconfigured in the template to have the latest version |
-| instance_type | This is the instance type set as input parameter |
+| Attribute Name           | Attribute Value                                                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| name                     | AlertLogic Security/IDS Launch Configuration \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\>                           |
+| description              | AlertLogic Launch Configuration for Security/IDS                                                                         |
+| image_id                 | AMI ID depends on the region and is preconfigured in the template to have the latest version                             |
+| instance_type            | This is the instance type set as input parameter                                                                         |
 | AssociatePublicIpAddress | `true` so appliance can have external connectivity through the IGW if `public` subnet type is chosen, otherwise is false |
 
 Following tags will be set on every launch configuration:
 
-| Tag Name | Tag Value |
-|----------|-----------|
-| Name | AlertLogic Security/IDS Launch Configuration \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
+| Tag Name | Tag Value                                                                                      |
+| -------- | ---------------------------------------------------------------------------------------------- |
+| Name     | AlertLogic Security/IDS Launch Configuration \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
 
-__NOTE__: The AMI IDs used are shared automatically with the AWS account by Alert Logic when the deployment is created in the UI.
+**NOTE**: The AMI IDs used are shared automatically with the AWS account by Alert Logic when the deployment is created in the UI.
 
 ### Security Auto Scaling Group
 
 Every group is configured to have following attributes:
 
-| Attribute Name | Attribute Value |
-|----------------|-----------------|
-| name | AlertLogic Security/IDS Autoscaling Group \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
-| DesiredCapacity | Provided appliance number or 1 if not provided |
+| Attribute Name  | Attribute Value                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| name            | AlertLogic Security/IDS Autoscaling Group \<AccountId\>/\<DeploymentId\>/\<AzId\>/\<VpcId\> |
+| DesiredCapacity | Provided appliance number or 1 if not provided                                              |
 
 The autosclaing group is configured to propagate the following tags to every launched instance (besides the previously defined list of shared tags):
 
-| Tag Name | Tag Value |
-|----------|-----------|
-| Name | AlertLogic Security/IDS Appliance |
+| Tag Name | Tag Value                         |
+| -------- | --------------------------------- |
+| Name     | AlertLogic Security/IDS Appliance |
