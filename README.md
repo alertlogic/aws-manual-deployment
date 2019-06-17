@@ -23,6 +23,7 @@ In this use case, the customer provides an existing subnet where the appliances 
 
 In order to deploy the appliances these requirements must be done prior:
 
+- This version of the template supports Terraform version 11.14 and earlier. 12.x not supported at this time.
 - A `manual` mode AWS deployment exist in the Alert Logic console
 - `manual` mode deployments needs to have scope set to at least one VPC
 - AWS VPC ID and CIDR where the appliances will be deployed in
