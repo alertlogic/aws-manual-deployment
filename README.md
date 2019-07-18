@@ -1,4 +1,4 @@
-# Terraform for Manual Mode Deployments in AWS
+# Terraform (v0.12 supported) for Manual Mode Deployments in AWS
 
 Collection of Terraform modules to manually deploy Vulnerability Scanning and IDS required infrastructure into an existing customer managed subnet in AWS.
 
@@ -23,6 +23,7 @@ In this use case, the customer provides an existing subnet where the appliances 
 
 In order to deploy the appliances these requirements must be done prior:
 
+- Terraform version 0.12 or newer, for older versions use the [master](https://github.com/al-deployment-services/aws-manual-deployment) branch.
 - A `manual` mode AWS deployment exist in the Alert Logic console
 - `manual` mode deployments needs to have scope set to at least one VPC
 - AWS VPC ID and CIDR where the appliances will be deployed in

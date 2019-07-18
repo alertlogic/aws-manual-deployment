@@ -1,10 +1,11 @@
 /*
-TerraForm Template (v1.0): Creates AlertLogic security appliance for Cloud Insight (Vulnerability Scanning) and IDS inside an existing VPC/Subnet.
+TerraForm Template (v2.0): Supports Terraform 0.12 and later. Creates AlertLogic security appliance for Cloud Insight (Vulnerability Scanning) and IDS inside an existing VPC/Subnet.
 The artifacts created are: A Security Group, a Launch Configuration for the security appliances that uses the Security Group and an Autoscaling Group that uses the Launch Configuration inside an existing Subnet.
 
 Usage:
 1. clone or download the entire repository to your working directory, i.e. ~/aws-manual-deployment
 .
+├── README.md
 ├── deploy.tf
 ├── module
 │   ├── ci_scan
@@ -16,10 +17,10 @@ Usage:
 │       ├── main.tf
 │       ├── outputs.tf
 │       └── variables.tf
-├── README.md
-└── vars.tfvars
+├── vars.tfvars
+└── versions.tf
 
-3 directories, 10 files
+3 directories, 11 files
 
 2. add all the required variable values in a separate file under the same directory, i.e. vars.tfvars
 3. run TerraForm initialization and apply to create the security resources in AWS:
@@ -33,108 +34,124 @@ Provider configuration:
 
 // Specify the provider and alternative access details below if needed
 provider "aws" {
-  profile                 = "${var.aws_profile}"
-  shared_credentials_file = "${var.aws_cred_file}"
-  region                  = "${var.aws_region}"
-  version                 = ">= 1.6"
+  profile                 = var.aws_profile
+  shared_credentials_file = var.aws_cred_file
+  region                  = var.aws_region
+  version                 = "~> 2.0"
 }
 
 provider "template" {
-  version = "~> 1.0"
+  version = "~> 2.1.2"
 }
 
 module "ci_scan" {
-  source = "module/ci_scan"
+  source = "./module/ci_scan"
 
-  account_id          = "${var.account_id}"
-  deployment_id       = "${var.deployment_id}"
-  stack               = "${var.stack}"
-  vpc_id              = "${var.vpc_id}"
-  ci_subnet_id        = "${var.ci_subnet_id}"
-  ci_subnet_type      = "${var.ci_subnet_type}"
-  vpc_cidr            = "${var.vpc_cidr}"
-  ci_instance_type    = "${var.ci_instance_type}"
-  ci_appliance_number = "${var.ci_appliance_number}"
+  account_id          = var.account_id
+  deployment_id       = var.deployment_id
+  stack               = var.stack
+  vpc_id              = var.vpc_id
+  ci_subnet_id        = var.ci_subnet_id
+  ci_subnet_type      = var.ci_subnet_type
+  vpc_cidr            = var.vpc_cidr
+  ci_instance_type    = var.ci_instance_type
+  ci_appliance_number = var.ci_appliance_number
 }
 
 module "ids" {
-  source = "module/ids"
+  source = "./module/ids"
 
-  account_id           = "${var.account_id}"
-  deployment_id        = "${var.deployment_id}"
-  create_ids           = "${var.create_ids}"
-  vpc_id               = "${var.vpc_id}"
-  ids_subnet_id       = "${var.ids_subnet_id}"
-  ids_subnet_type      = "${var.ids_subnet_type}"
-  vpc_cidr             = "${var.vpc_cidr}"
-  ids_instance_type    = "${var.ids_instance_type}"
-  ids_appliance_number = "${var.ids_appliance_number}"
+  account_id           = var.account_id
+  deployment_id        = var.deployment_id
+  create_ids           = var.create_ids
+  vpc_id               = var.vpc_id
+  ids_subnet_id        = var.ids_subnet_id
+  ids_subnet_type      = var.ids_subnet_type
+  vpc_cidr             = var.vpc_cidr
+  ids_instance_type    = var.ids_instance_type
+  ids_appliance_number = var.ids_appliance_number
 }
 
-variable "aws_profile" {}
+variable "aws_profile" {
+}
 
-variable "aws_cred_file" {}
+variable "aws_cred_file" {
+}
 
-variable "aws_region" {}
+variable "aws_region" {
+}
 
-variable "account_id" {}
+variable "account_id" {
+}
 
-variable "deployment_id" {}
+variable "deployment_id" {
+}
 
-variable "stack" {}
+variable "stack" {
+}
 
-variable "create_ids" {}
+variable "create_ids" {
+}
 
-variable "vpc_id" {}
+variable "vpc_id" {
+}
 
-variable "vpc_cidr" {}
+variable "vpc_cidr" {
+}
 
-variable "ci_subnet_id" {}
+variable "ci_subnet_id" {
+}
 
 variable "ids_subnet_id" {
-  type = "list"
+  type = list(string)
 }
 
-variable "ci_subnet_type" {}
-
-variable "ids_subnet_type" {}
-
-variable "ci_instance_type" {}
-
-variable "ci_appliance_number" {}
-
-variable "ids_instance_type" {}
-
-variable "ids_appliance_number" {}
-
-output "ProtectedAccount:" {
-  value = "${module.ci_scan.ProtectedAccount}"
+variable "ci_subnet_type" {
 }
 
-output "ProtectedVPC:" {
-  value = "${module.ci_scan.ProtectedVPC}"
+variable "ids_subnet_type" {
 }
 
-output "ScannerDeployedInSubnetID:" {
-  value = "${module.ci_scan.ScannerDeployedInSubnetID}"
+variable "ci_instance_type" {
 }
 
-output "IDSDeployedInSubnetIDs:" {
-  value = "${module.ids.IDSDeployedInSubnetIDs}"
+variable "ci_appliance_number" {
 }
 
-output "NumberOfSecurityAppliancesDeployed:" {
-  value = "${module.ci_scan.NumberOfSecurityAppliancesDeployed}"
+variable "ids_instance_type" {
 }
 
-output "NumberOfIDSAppliancesDeployed:" {
-  value = "${module.ids.NumberOfIDSAppliancesDeployed}"
+variable "ids_appliance_number" {
 }
 
-output "CISecurityGroupID:" {
-  value = "${module.ci_scan.CISecurityGroupID}"
+output ProtectedAccount {
+  value = module.ci_scan.ProtectedAccount
 }
 
-output "IDSSecurityGroupID:" {
-  value = "${module.ids.IDSSecurityGroupID}"
+output ProtectedVPC {
+  value = module.ci_scan.ProtectedVPC
+}
+
+output ScannerDeployedInSubnetID {
+  value = module.ci_scan.ScannerDeployedInSubnetID
+}
+
+output IDSDeployedInSubnetIDs {
+  value = module.ids.IDSDeployedInSubnetIDs
+}
+
+output NumberOfSecurityAppliancesDeployed {
+  value = module.ci_scan.NumberOfSecurityAppliancesDeployed
+}
+
+output NumberOfIDSAppliancesDeployed {
+  value = module.ids.NumberOfIDSAppliancesDeployed
+}
+
+output CISecurityGroupID {
+  value = module.ci_scan.CISecurityGroupID
+}
+
+output IDSSecurityGroupID {
+  value = module.ids.IDSSecurityGroupID
 }

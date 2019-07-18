@@ -25,7 +25,7 @@ variable "ci_subnet_type" {
 
 variable "vpc_cidr" {
   description = "CIDR netblock for the VPC."
-  type        = "string"
+  type        = string
 }
 
 variable "ci_instance_type" {
@@ -40,7 +40,7 @@ variable "ci_appliance_number" {
 
 // the latest AMI is provided by Alert Logic and should have been previously shared with the AWS account deploying the security appliance
 variable "aws_amis" {
-  type = "map"
+  type = map(string)
 
   default = {
     ap-south-1     = "ami-92b996fd"
@@ -62,17 +62,17 @@ variable "aws_amis" {
 }
 
 variable "stack_vaporator" {
-  type = "map"
+  type = map(string)
 
   default = {
-    US.host = "agentapi.cloudinsight.alertlogic.com"
-    US.port = "443"
-    UK.host = "agentapi.cloudinsight.alertlogic.co.uk"
-    UK.port = "443"
+    "US.host" = "agentapi.cloudinsight.alertlogic.com"
+    "US.port" = "443"
+    "UK.host" = "agentapi.cloudinsight.alertlogic.co.uk"
+    "UK.port" = "443"
   }
 }
 
 variable "internal" {
   description = "Internal tags for tracking deployment versions"
-  default     = "1.0.0"
+  default     = "2.0.0"
 }

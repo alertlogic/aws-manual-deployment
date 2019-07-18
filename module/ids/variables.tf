@@ -12,7 +12,7 @@ variable "vpc_id" {
 
 variable "ids_subnet_id" {
   description = "Specify the existing subnet ID(s) where the appliance will be deployed in."
-  type        = "list"
+  type        = list(string)
 }
 
 variable "ids_subnet_type" {
@@ -21,7 +21,7 @@ variable "ids_subnet_type" {
 
 variable "vpc_cidr" {
   description = "CIDR netblock of the VPC to be monitored (Where agents will be installed)."
-  type        = "string"
+  type        = string
 }
 
 variable "ids_instance_type" {
@@ -39,7 +39,7 @@ variable "create_ids" {
 
 // the latest AMI is provided by Alert Logic and should have been previously shared with the AWS account deploying the IDS security appliance
 variable "aws_amis" {
-  type = "map"
+  type = map(string)
 
   default = {
     ap-south-1     = "ami-944916fb"
@@ -61,18 +61,7 @@ variable "aws_amis" {
   }
 }
 
-variable "stack_vaporator" {
-  type = "map"
-
-  default = {
-    US.host = "agentapi.cloudinsight.alertlogic.com"
-    US.port = "443"
-    UK.host = "agentapi.cloudinsight.alertlogic.co.uk"
-    UK.port = "443"
-  }
-}
-
 variable "internal" {
   description = "Internal tags for tracking deployment versions"
-  default     = "1.0.0"
+  default     = "2.0.0"
 }
