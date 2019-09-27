@@ -43,21 +43,21 @@ variable "aws_amis" {
   type = map(string)
 
   default = {
-    ap-south-1     = "ami-92b996fd"
-    eu-west-3      = "ami-555dec28"
-    eu-west-2      = "ami-9505e9f2"
-    eu-west-1      = "ami-05764c7c"
-    ap-northeast-2 = "ami-9fbe15f1"
-    ap-northeast-1 = "ami-e951a996"
-    sa-east-1      = "ami-e5e4ba89"
-    ca-central-1   = "ami-40e46724"
-    ap-southeast-1 = "ami-f986b985"
-    ap-southeast-2 = "ami-eb8f5d89"
-    eu-central-1   = "ami-a54b7e4e"
-    us-east-1      = "ami-08076977"
-    us-east-2      = "ami-96704ff3"
-    us-west-1      = "ami-d08e95b0"
-    us-west-2      = "ami-928ef5ea"
+    us-east-1       = "ami-0cfe1e2d48132cb1f"
+    us-west-1       = "ami-0182f258247fc032c"
+    ap-northeast-2  = "ami-07185b9ff1dc384b8"
+    ap-northeast-1  = "ami-0c51e0eeb89ea57cb"
+    sa-east-1       = "ami-05099c9a953304422"
+    ap-southeast-1  = "ami-076affc300b3f974f"
+    ca-central-1    = "ami-088e7a0aa3de642de"
+    ap-southeast-2  = "ami-0892d934fbc643585"
+    us-west-2       = "ami-05b6c462cc60392b9"
+    us-east-2       = "ami-0a0bfd0683191baa7"
+    ap-south-1      = "ami-07dde1f863928032c"
+    eu-central-1    = "ami-0075a34755064f92b"
+    eu-west-1       = "ami-06614b5b2bea68751"
+    eu-west-2       = "ami-0f37f0a12298d59c6"
+    eu-west-3       = "ami-073077d0478138645"
   }
 }
 
