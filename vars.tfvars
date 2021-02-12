@@ -5,6 +5,8 @@
 # -------------------------------------------------------------------------------------------------------------------
 */
 
+#aws_assumed_role_arn = "arn:aws:iam::xxxxxxxxxxxx:role/assumed-role" // This field is only necessary when an assumed role is required. Commented out by default.
+
 aws_profile = "aws_profile" // The AWS profile configured for credentials OR matching AWS_PROFILE environment variable
 
 aws_cred_file = "~/.aws/credentials" // An AWS credentials file to specify your credentials

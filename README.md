@@ -1,4 +1,4 @@
-# Terraform (v0.12 supported) for Manual Mode Deployments in AWS
+# Terraform (v0.14 supported) for Manual Mode Deployments in AWS
 
 Collection of Terraform modules to manually deploy Vulnerability Scanning and IDS required infrastructure into an existing customer managed subnet in AWS.
 
@@ -23,7 +23,7 @@ In this use case, the customer provides an existing subnet where the appliances 
 
 In order to deploy the appliances these requirements must be done prior:
 
-- Terraform version 0.12 or newer, for older versions use the [master](https://github.com/al-deployment-services/aws-manual-deployment) branch.
+- Terraform version 0.14 or newer, for older versions use the drop down menu for branch selection (v0.12 or master for v0.11 and below).
 - A `manual` mode AWS deployment exist in the Alert Logic console
 - `manual` mode deployments needs to have scope set to at least one VPC
 - AWS VPC ID and CIDR where the appliances will be deployed in
@@ -32,6 +32,7 @@ In order to deploy the appliances these requirements must be done prior:
 ### Variables
 
 ```h
+#aws_assumed_role_arn = "arn:aws:iam::xxxxxxxxxxxx:role/assumed-role" // This field is only necessary when an assumed role is required. Commented out by default.
 aws_profile = "aws_profile" // The AWS profile configured for credentials OR matching AWS_PROFILE environment variable
 aws_cred_file = "~/.aws/credentials" // An AWS credentials file to specify your credentials
 aws_region = "xx-xxxx-x" // The AWS region to deploy the appliance in
@@ -94,6 +95,17 @@ The template will create the following resources in each Subnet provided (see [A
    **Provider configuration:**
    The configuration applied to this terraform uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
    Variables can be loaded from separate file or passed as parameters. See <https://www.terraform.io/docs/providers/aws/#authentication> for more options.
+
+   If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below:
+      provider "aws" {
+         assume_role {
+            role_arn = var.aws_assumed_role_arn
+         }
+         shared_credentials_file = var.aws_cred_file
+         profile                 = var.aws_profile
+         region                  = var.aws_region
+      }
+   And make sure that you uncomment out the section in the vars.tfvars file for the assumed role.
 
 ## Appendix A: Resource properties
 

@@ -30,18 +30,42 @@ Usage:
 Provider configuration:
  The configuration applied below uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
  Variables can be loaded from separate file or passed as parameters. See https://www.terraform.io/docs/providers/aws/#authentication for more options.
+ 
+ If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below:
+provider "aws" {
+  assume_role {
+    role_arn = var.aws_assumed_role_arn
+  }
+  shared_credentials_file = var.aws_cred_file
+  profile                 = var.aws_profile
+  region                  = var.aws_region
+}
+
+ Also add a variable in the variables section to match the below:
+variable "aws_assumed_role_arn" {
+}
+
+ And make sure that you uncomment out the section in the vars.tfvars file for the assumed role.
 */
 
 // Specify the provider and alternative access details below if needed
 provider "aws" {
-  profile                 = var.aws_profile
   shared_credentials_file = var.aws_cred_file
+  profile                 = var.aws_profile
   region                  = var.aws_region
-  version                 = "~> 2.0"
 }
 
-provider "template" {
-  version = "~> 2.1.2"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2.1.2"
+    }
+  }
 }
 
 module "ci_scan" {
