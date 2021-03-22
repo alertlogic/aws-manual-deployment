@@ -58,6 +58,9 @@ variable "aws_amis" {
       eu-west-1       = "ami-06614b5b2bea68751"
       eu-west-2       = "ami-0f37f0a12298d59c6"
       eu-west-3       = "ami-073077d0478138645"
+      ap-east-1       = "ami-00b1e2df7e6f55bdc"
+      eu-north-1      = "ami-0d065c2312363c2e4"
+      me-south-1      = "ami-0a12b886c69fbf4ca"
   }
 }
 
