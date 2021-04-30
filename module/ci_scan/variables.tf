@@ -43,21 +43,24 @@ variable "aws_amis" {
   type = map(string)
 
   default = {
-    us-east-1       = "ami-0cfe1e2d48132cb1f"
-    us-west-1       = "ami-0182f258247fc032c"
-    ap-northeast-2  = "ami-07185b9ff1dc384b8"
+    ap-east-1       = "ami-00b1e2df7e6f55bdc"
     ap-northeast-1  = "ami-0c51e0eeb89ea57cb"
-    sa-east-1       = "ami-05099c9a953304422"
-    ap-southeast-1  = "ami-076affc300b3f974f"
-    ca-central-1    = "ami-088e7a0aa3de642de"
-    ap-southeast-2  = "ami-0892d934fbc643585"
-    us-west-2       = "ami-05b6c462cc60392b9"
-    us-east-2       = "ami-0a0bfd0683191baa7"
+    ap-northeast-2  = "ami-07185b9ff1dc384b8"
     ap-south-1      = "ami-07dde1f863928032c"
+    ap-southeast-1  = "ami-076affc300b3f974f"
+    ap-southeast-2  = "ami-0892d934fbc643585"
+    ca-central-1    = "ami-088e7a0aa3de642de"
     eu-central-1    = "ami-0075a34755064f92b"
+    eu-north-1      = "ami-0d065c2312363c2e4"
     eu-west-1       = "ami-06614b5b2bea68751"
     eu-west-2       = "ami-0f37f0a12298d59c6"
     eu-west-3       = "ami-073077d0478138645"
+    me-south-1      = "ami-0a12b886c69fbf4ca"
+    sa-east-1       = "ami-05099c9a953304422"
+    us-east-1       = "ami-0cfe1e2d48132cb1f"
+    us-east-2       = "ami-0a0bfd0683191baa7"
+    us-west-1       = "ami-0182f258247fc032c"
+    us-west-2       = "ami-05b6c462cc60392b9"  
   }
 }
 
