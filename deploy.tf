@@ -32,18 +32,18 @@ Provider configuration:
  Variables can be loaded from separate file or passed as parameters. See https://www.terraform.io/docs/providers/aws/#authentication for more options.
  
  If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below:
-provider "aws" {
-  assume_role {
-    role_arn = var.aws_assumed_role_arn
-  }
-  shared_credentials_file = var.aws_cred_file
-  profile                 = var.aws_profile
-  region                  = var.aws_region
-}
+ provider "aws" {
+   assume_role {
+     role_arn = var.aws_assumed_role_arn
+   }
+   shared_credentials_file = var.aws_cred_file
+   profile                 = var.aws_profile
+   region                  = var.aws_region
+ }
 
  Also add a variable in the variables section to match the below:
-variable "aws_assumed_role_arn" {
-}
+ variable "aws_assumed_role_arn" {
+ }
 
  And make sure that you uncomment out the section in the vars.tfvars file for the assumed role.
 */
@@ -52,6 +52,9 @@ variable "aws_assumed_role_arn" {
 provider "aws" {
   shared_credentials_file = var.aws_cred_file
   profile                 = var.aws_profile
+  assume_role {
+     role_arn = var.aws_assumed_role_arn
+  }
   region                  = var.aws_region
 }
 
@@ -94,6 +97,9 @@ module "ids" {
   vpc_cidr             = var.vpc_cidr
   ids_instance_type    = var.ids_instance_type
   ids_appliance_number = var.ids_appliance_number
+}
+
+variable "aws_assumed_role_arn" {
 }
 
 variable "aws_profile" {

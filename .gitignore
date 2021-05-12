@@ -2,3 +2,4 @@
 terraform.tfstate*
 test-vars.tfvars
 .terraform.lock.hcl
+.terraform.tfstate.lock.info
