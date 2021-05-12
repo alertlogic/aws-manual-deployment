@@ -35,6 +35,7 @@ In order to deploy the appliances these requirements must be done prior:
 ### Variables
 
 ```h
+#aws_assumed_role_arn = "arn:aws:iam::<aws_account>:role/<assumed_role>" // This field is only necessary when an assumed role is required. Commented out by default.
 aws_profile = "aws_profile" // The AWS profile configured for credentials OR matching AWS_PROFILE environment variable
 aws_cred_file = "~/.aws/credentials" // An AWS credentials file to specify your credentials
 aws_region = "xx-xxxx-x" // The AWS region to deploy the appliance in
