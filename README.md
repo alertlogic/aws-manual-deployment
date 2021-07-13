@@ -23,7 +23,10 @@ In this use case, the customer provides an existing subnet where the appliances 
 
 In order to deploy the appliances these requirements must be done prior:
 
-- Terraform version 11.14 and earlier. For v0.12 and newer, use the [v0.12](https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.12) branch.
+- Terraform version 14.1 thru 14.11. 
+   - For v0.12, use the [v0.11] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.11) branch.
+   - For v0.14, use the [v0.12] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.12) branch.
+   - For the latest terraform version, use master branch
 - A `manual` mode AWS deployment exist in the Alert Logic console
 - `manual` mode deployments needs to have scope set to at least one VPC
 - AWS VPC ID and CIDR where the appliances will be deployed in
@@ -32,6 +35,7 @@ In order to deploy the appliances these requirements must be done prior:
 ### Variables
 
 ```h
+#aws_assumed_role_arn = "arn:aws:iam::<aws_account>:role/<assumed_role>" // This field is only necessary when an assumed role is required. Commented out by default.
 aws_profile = "aws_profile" // The AWS profile configured for credentials OR matching AWS_PROFILE environment variable
 aws_cred_file = "~/.aws/credentials" // An AWS credentials file to specify your credentials
 aws_region = "xx-xxxx-x" // The AWS region to deploy the appliance in
@@ -68,15 +72,15 @@ The template will create the following resources in each Subnet provided (see [A
    ```text
    ├── deploy.tf
    ├── module
-   │   ├── ci_scan
-   │   │   ├── main.tf
-   │   │   ├── outputs.tf
-   │   │   ├── userdata.tpl
-   │   │   └── variables.tf
-   │   └── ids
-   │       ├── main.tf
-   │       ├── outputs.tf
-   │       └── variables.tf
+   │   ├── ci_scan
+   │   │   ├── main.tf
+   │   │   ├── outputs.tf
+   │   │   ├── userdata.tpl
+   │   │   └── variables.tf
+   │   └── ids
+   │       ├── main.tf
+   │       ├── outputs.tf
+   │       └── variables.tf
    ├── README.md
    └── vars.tfvars
 
@@ -103,7 +107,6 @@ The template will create the following resources in each Subnet provided (see [A
      shared_credentials_file = var.aws_cred_file 
      profile = var.aws_profile 
      region = var.aws_region
-     version = ">= 1.6"
    } 
 
    Make sure to add the following variable to the variables section below:

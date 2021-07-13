@@ -3,17 +3,18 @@ output "ProtectedAccount" {
 }
 
 output "ProtectedVPC" {
-  value = "${var.vpc_id}"
+  value = var.vpc_id
 }
 
 output "NumberOfSecurityAppliancesDeployed" {
-  value = "${var.ci_appliance_number}"
+  value = var.ci_appliance_number
 }
 
 output "CISecurityGroupID" {
-  value = "${aws_security_group.ci_appliance_sg.id}"
+  value = aws_security_group.ci_appliance_sg.id
 }
 
 output "ScannerDeployedInSubnetID" {
   value = "${var.ci_subnet_id}/${var.ci_subnet_type}"
 }
+
