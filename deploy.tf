@@ -1,5 +1,5 @@
 /*
-TerraForm Template (v2.0): Supports Terraform 0.12 and later. Creates AlertLogic security appliance for Cloud Insight (Vulnerability Scanning) and IDS inside an existing VPC/Subnet.
+TerraForm Template (v3.0): Supports Terraform 0.14 and later. Creates AlertLogic security appliance for Cloud Insight (Vulnerability Scanning) and IDS inside an existing VPC/Subnet.
 The artifacts created are: A Security Group, a Launch Configuration for the security appliances that uses the Security Group and an Autoscaling Group that uses the Launch Configuration inside an existing Subnet.
 
 Usage:

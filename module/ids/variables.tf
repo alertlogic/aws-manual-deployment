@@ -69,5 +69,5 @@ variable "aws_amis" {
 
 variable "internal" {
   description = "Internal tags for tracking deployment versions"
-  default     = "2.0.0"
+  default     = "3.0.0"
 }
