@@ -24,8 +24,8 @@ In this use case, the customer provides an existing subnet where the appliances 
 In order to deploy the appliances these requirements must be done prior:
 
 - Terraform version 14.1 thru 14.11. 
-   - For v0.12, use the [v0.11] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.11) branch.
-   - For v0.14, use the [v0.12] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.12) branch.
+   - For v0.11, use the [v0.11] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.11) branch.
+   - For v0.12, use the [v0.12] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.12) branch.
    - For the latest terraform version, use master branch
 - A `manual` mode AWS deployment exist in the Alert Logic console
 - `manual` mode deployments needs to have scope set to at least one VPC
