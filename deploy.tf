@@ -26,26 +26,6 @@ Usage:
 3. run TerraForm initialization and apply to create the security resources in AWS:
    > terraform init
    > terraform apply -var-file=vars.tfvars
-
-Provider configuration:
- The configuration applied below uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
- Variables can be loaded from separate file or passed as parameters. See https://www.terraform.io/docs/providers/aws/#authentication for more options.
- 
- If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below:
- provider "aws" {
-   assume_role {
-     role_arn = var.aws_assumed_role_arn
-   }
-   shared_credentials_file = var.aws_cred_file
-   profile                 = var.aws_profile
-   region                  = var.aws_region
- }
-
- Also add a variable in the variables section to match the below:
- variable "aws_assumed_role_arn" {
- }
-
- And make sure that you uncomment out the section in the vars.tfvars file for the assumed role.
 */
 
 terraform {
@@ -87,15 +67,6 @@ module "ids" {
   vpc_cidr             = var.vpc_cidr
   ids_instance_type    = var.ids_instance_type
   ids_appliance_number = var.ids_appliance_number
-}
-
-variable "aws_profile" {
-}
-
-variable "aws_cred_file" {
-}
-
-variable "aws_region" {
 }
 
 variable "account_id" {
