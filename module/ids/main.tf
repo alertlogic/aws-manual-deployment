@@ -25,39 +25,41 @@ resource "aws_autoscaling_group" "ids_appliance_asg" {
   desired_capacity     = var.ids_appliance_number
   force_delete         = true
   launch_configuration = aws_launch_configuration.ids_appliance_lc[0].name
-  vpc_zone_identifier  = var.ids_subnet_id
+  vpc_zone_identifier  = var.ids_subnet_ids
 
   lifecycle {
     create_before_destroy = true
   }
 
-  tags = [
-    {
-      key                 = "Name"
-      value               = "AlertLogic IDS Security Appliance"
-      propagate_at_launch = "true"
-    },
-    {
-      key                 = "AlertLogic-AccountID"
-      value               = var.account_id
-      propagate_at_launch = "true"
-    },
-    {
-      key                 = "AlertLogic-EnvironmentID"
-      value               = var.deployment_id
-      propagate_at_launch = "true"
-    },
-    {
-      key                 = "AlertLogic"
-      value               = "Security"
-      propagate_at_launch = "true"
-    },
-    {
-      key                 = "Alertlogic IDS Manual Mode Template Version"
-      value               = var.internal
-      propagate_at_launch = "true"
+  dynamic "tag" {
+    for_each = [
+      {
+        key   = "Name"
+        value = "AlertLogic IDS Security Appliance"
+      },
+      {
+        key   = "AlertLogic-AccountID"
+        value = var.account_id
+      },
+      {
+        key   = "AlertLogic-EnvironmentID"
+        value = var.deployment_id
+      },
+      {
+        key   = "AlertLogic"
+        value = "Security"
+      },
+      {
+        key   = "Alertlogic IDS Manual Mode Template Version"
+        value = var.internal
+      }
+    ]
+    content {
+      key                 = tag.key
+      value               = tag.value["value"]
+      propagate_at_launch = true
     }
-  ]
+  }
 }
 
 // create security group to allow IDS security appliance traffic to flow outbound to Alert Logic DataCenter (resitricted and required outbound rules will be applied)

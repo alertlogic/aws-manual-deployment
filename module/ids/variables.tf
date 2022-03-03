@@ -10,7 +10,7 @@ variable "vpc_id" {
   description = "Specify the VPC ID where the appliance will be deployed in."
 }
 
-variable "ids_subnet_id" {
+variable "ids_subnet_ids" {
   description = "Specify the existing subnet ID(s) where the appliance will be deployed in."
   type        = list(string)
 }

@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.17 # https://github.com/gruntwork-io/pre-commit/releases
+    hooks:
+      - id: tflint
+      - id: shellcheck
+      - id: terraform-validate
+      - id: terraform-fmt
+  - repo: https://github.com/syntaqx/git-hooks
+    rev: v0.0.17
+    hooks:
+      - id: forbid-binary
+      - id: shfmt

@@ -15,6 +15,6 @@ output "CISecurityGroupID" {
 }
 
 output "ScannerDeployedInSubnetID" {
-  value = "${var.ci_subnet_id}/${var.ci_subnet_type}"
+  value = aws_autoscaling_group.ci_appliance_asg.vpc_zone_identifier
 }
 

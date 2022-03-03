@@ -15,6 +15,6 @@ output "IDSSecurityGroupID" {
 }
 
 output "IDSDeployedInSubnetIDs" {
-  value = var.ids_subnet_id
+  value = aws_autoscaling_group.ids_appliance_asg.*.vpc_zone_identifier
 }
 

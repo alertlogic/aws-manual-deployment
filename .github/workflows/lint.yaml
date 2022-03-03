@@ -1,0 +1,31 @@
+name: Terraform Workflow
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout source code
+
+    - uses: terraform-linters/setup-tflint@v1
+      name: Setup TFLint
+      with:
+        tflint_version: v0.34.1
+
+    - name: Init TFLint
+      run: tflint --init
+
+    - name: Run TFLint
+      run: |
+        find ./* -type f -name "*.tf" -exec dirname '{}' ';' | sort -u  | xargs -n1 tflint -f compact

@@ -15,8 +15,9 @@ variable "vpc_id" {
   description = "Specify the VPC ID where the appliance will be deployed in."
 }
 
-variable "ci_subnet_id" {
+variable "ci_subnet_ids" {
   description = "Specify the existing subnet ID where the Scanning appliance will be deployed in."
+  type        = list(string)
 }
 
 variable "ci_subnet_type" {
@@ -43,24 +44,24 @@ variable "aws_amis" {
   type = map(string)
 
   default = {
-    ap-east-1       = "ami-0744826a43ebcaa20"
-    ap-northeast-1  = "ami-00f06755223327782"
-    ap-northeast-2  = "ami-02914a21d67a3d422"
-    ap-south-1      = "ami-01497ed57020df9a1"
-    ap-southeast-1  = "ami-06007137c7dad1ef6"
-    ap-southeast-2  = "ami-02910709a8a3d1d40"
-    ca-central-1    = "ami-06ff0915aea36b0c5"
-    eu-central-1    = "ami-075f103b9b7d6c2fe"
-    eu-north-1      = "ami-0e60f60be7e206a79"
-    eu-west-1       = "ami-0fca75afdd4b43b58"
-    eu-west-2       = "ami-0cccfea5d111b17f4"
-    eu-west-3       = "ami-0472090cd7e0b2d9e"
-    me-south-1      = "ami-0c30caf7cad4a4fcf"
-    sa-east-1       = "ami-09f538166c4483f6c"
-    us-east-1       = "ami-0b35743e831becad1"
-    us-east-2       = "ami-00d46562af87f9209"
-    us-west-1       = "ami-02db305d04e11d40b"
-    us-west-2       = "ami-01651323b6338e70b"
+    ap-east-1      = "ami-0744826a43ebcaa20"
+    ap-northeast-1 = "ami-00f06755223327782"
+    ap-northeast-2 = "ami-02914a21d67a3d422"
+    ap-south-1     = "ami-01497ed57020df9a1"
+    ap-southeast-1 = "ami-06007137c7dad1ef6"
+    ap-southeast-2 = "ami-02910709a8a3d1d40"
+    ca-central-1   = "ami-06ff0915aea36b0c5"
+    eu-central-1   = "ami-075f103b9b7d6c2fe"
+    eu-north-1     = "ami-0e60f60be7e206a79"
+    eu-west-1      = "ami-0fca75afdd4b43b58"
+    eu-west-2      = "ami-0cccfea5d111b17f4"
+    eu-west-3      = "ami-0472090cd7e0b2d9e"
+    me-south-1     = "ami-0c30caf7cad4a4fcf"
+    sa-east-1      = "ami-09f538166c4483f6c"
+    us-east-1      = "ami-0b35743e831becad1"
+    us-east-2      = "ami-00d46562af87f9209"
+    us-west-1      = "ami-02db305d04e11d40b"
+    us-west-2      = "ami-01651323b6338e70b"
   }
 }
 
