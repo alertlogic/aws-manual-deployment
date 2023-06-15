@@ -2,18 +2,6 @@
 data "aws_region" "current" {
 }
 
-// initial setup of the security appliance, a bash bootstrap script is executed using AWS userdata functionality
-data "template_file" "userdata" {
-  template = file("${path.module}/userdata.tpl")
-
-  vars = {
-    stack_host    = var.stack_vaporator["${var.stack}.host"]
-    stack_port    = var.stack_vaporator["${var.stack}.port"]
-    account_id    = var.account_id
-    deployment_id = var.deployment_id
-  }
-}
-
 // create launch configuration for the security appliances to be created
 resource "aws_launch_configuration" "ci_appliance_lc" {
   name_prefix                 = "AlertLogic Security Launch Configuration ${var.account_id}/${var.deployment_id}/${var.vpc_id}_"
@@ -21,7 +9,14 @@ resource "aws_launch_configuration" "ci_appliance_lc" {
   security_groups             = [aws_security_group.ci_appliance_sg.id]
   instance_type               = var.ci_instance_type
   associate_public_ip_address = var.ci_subnet_type == "Public" ? true : false
-  user_data                   = data.template_file.userdata.rendered
+  user_data = templatefile("${path.module}/userdata.tpl",
+    {
+      stack_host    = var.stack_vaporator["${var.stack}.host"]
+      stack_port    = var.stack_vaporator["${var.stack}.port"]
+      account_id    = var.account_id
+      deployment_id = var.deployment_id
+    }
+  )
 
   lifecycle {
     create_before_destroy = true
