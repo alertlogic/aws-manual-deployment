@@ -30,7 +30,7 @@ Usage:
 Provider configuration:
  The configuration applied below uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
  Variables can be loaded from separate file or passed as parameters. See https://www.terraform.io/docs/providers/aws/#authentication for more options.
- 
+
  If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below:
  provider "aws" {
    assume_role {
@@ -148,34 +148,34 @@ variable "ids_instance_type" {
 variable "ids_appliance_number" {
 }
 
-output ProtectedAccount {
+output "ProtectedAccount" {
   value = module.ci_scan.ProtectedAccount
 }
 
-output ProtectedVPC {
+output "ProtectedVPC" {
   value = module.ci_scan.ProtectedVPC
 }
 
-output ScannerDeployedInSubnetID {
+output "ScannerDeployedInSubnetID" {
   value = module.ci_scan.ScannerDeployedInSubnetID
 }
 
-output IDSDeployedInSubnetIDs {
+output "IDSDeployedInSubnetIDs" {
   value = module.ids.IDSDeployedInSubnetIDs
 }
 
-output NumberOfSecurityAppliancesDeployed {
+output "NumberOfSecurityAppliancesDeployed" {
   value = module.ci_scan.NumberOfSecurityAppliancesDeployed
 }
 
-output NumberOfIDSAppliancesDeployed {
+output "NumberOfIDSAppliancesDeployed" {
   value = module.ids.NumberOfIDSAppliancesDeployed
 }
 
-output CISecurityGroupID {
+output "CISecurityGroupID" {
   value = module.ci_scan.CISecurityGroupID
 }
 
-output IDSSecurityGroupID {
+output "IDSSecurityGroupID" {
   value = module.ids.IDSSecurityGroupID
 }
