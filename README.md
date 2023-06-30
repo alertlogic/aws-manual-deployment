@@ -23,7 +23,7 @@ In this use case, the customer provides an existing subnet where the appliances 
 
 In order to deploy the appliances these requirements must be done prior:
 
-- Terraform version 14.1 thru 14.11. 
+- Terraform version 14.1 thru 14.11.
    - For v0.11, use the [v0.11] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.11) branch.
    - For v0.12, use the [v0.12] (https://github.com/al-deployment-services/aws-manual-deployment/tree/v0.12) branch.
    - For the latest terraform version, use master branch
@@ -99,15 +99,15 @@ The template will create the following resources in each Subnet provided (see [A
    The configuration applied to this terraform uses a shared_credentials_file method. Credentials can be provided from separate file (default file name is credentials.tf)
    Variables can be loaded from separate file or passed as parameters. See <https://www.terraform.io/docs/providers/aws/#authentication> for more options.
 
-   If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below: 
-   provider "aws" { 
-     assume_role { 
-       role_arn = var.aws_assumed_role_arn 
-     } 
-     shared_credentials_file = var.aws_cred_file 
-     profile = var.aws_profile 
+   If you need to assume a role with your user account, then you will need to replace the existing "aws" provider section with the below:
+   provider "aws" {
+     assume_role {
+       role_arn = var.aws_assumed_role_arn
+     }
+     shared_credentials_file = var.aws_cred_file
+     profile = var.aws_profile
      region = var.aws_region
-   } 
+   }
 
    Make sure to add the following variable to the variables section below:
    variable "aws_assumed_role_arn" {}
@@ -205,4 +205,62 @@ The autosclaing group is configured to propagate the following tags to every lau
 
 | Tag Name | Tag Value                         |
 | -------- | --------------------------------- |
-| Name     | AlertLogic Security/IDS Appliance |
+| Name     | AlertLogic Security/IDS Appliance |<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.0 |
+| <a name="requirement_template"></a> [template](#requirement\_template) | ~> 2.1.2 |
+
+## Providers
+
+No providers.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_ci_scan"></a> [ci\_scan](#module\_ci\_scan) | ./module/ci_scan | n/a |
+| <a name="module_ids"></a> [ids](#module\_ids) | ./module/ids | n/a |
+
+## Resources
+
+No resources.
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_account_id"></a> [account\_id](#input\_account\_id) | n/a | `any` | n/a | yes |
+| <a name="input_aws_cred_file"></a> [aws\_cred\_file](#input\_aws\_cred\_file) | n/a | `any` | n/a | yes |
+| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | n/a | `any` | n/a | yes |
+| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `any` | n/a | yes |
+| <a name="input_ci_appliance_number"></a> [ci\_appliance\_number](#input\_ci\_appliance\_number) | n/a | `any` | n/a | yes |
+| <a name="input_ci_instance_type"></a> [ci\_instance\_type](#input\_ci\_instance\_type) | n/a | `any` | n/a | yes |
+| <a name="input_ci_subnet_id"></a> [ci\_subnet\_id](#input\_ci\_subnet\_id) | n/a | `any` | n/a | yes |
+| <a name="input_ci_subnet_type"></a> [ci\_subnet\_type](#input\_ci\_subnet\_type) | n/a | `any` | n/a | yes |
+| <a name="input_create_ids"></a> [create\_ids](#input\_create\_ids) | n/a | `any` | n/a | yes |
+| <a name="input_deployment_id"></a> [deployment\_id](#input\_deployment\_id) | n/a | `any` | n/a | yes |
+| <a name="input_ids_appliance_number"></a> [ids\_appliance\_number](#input\_ids\_appliance\_number) | n/a | `any` | n/a | yes |
+| <a name="input_ids_instance_type"></a> [ids\_instance\_type](#input\_ids\_instance\_type) | n/a | `any` | n/a | yes |
+| <a name="input_ids_subnet_id"></a> [ids\_subnet\_id](#input\_ids\_subnet\_id) | n/a | `list(string)` | n/a | yes |
+| <a name="input_ids_subnet_type"></a> [ids\_subnet\_type](#input\_ids\_subnet\_type) | n/a | `any` | n/a | yes |
+| <a name="input_stack"></a> [stack](#input\_stack) | n/a | `any` | n/a | yes |
+| <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | n/a | `any` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | n/a | `any` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_CISecurityGroupID"></a> [CISecurityGroupID](#output\_CISecurityGroupID) | n/a |
+| <a name="output_IDSDeployedInSubnetIDs"></a> [IDSDeployedInSubnetIDs](#output\_IDSDeployedInSubnetIDs) | n/a |
+| <a name="output_IDSSecurityGroupID"></a> [IDSSecurityGroupID](#output\_IDSSecurityGroupID) | n/a |
+| <a name="output_NumberOfIDSAppliancesDeployed"></a> [NumberOfIDSAppliancesDeployed](#output\_NumberOfIDSAppliancesDeployed) | n/a |
+| <a name="output_NumberOfSecurityAppliancesDeployed"></a> [NumberOfSecurityAppliancesDeployed](#output\_NumberOfSecurityAppliancesDeployed) | n/a |
+| <a name="output_ProtectedAccount"></a> [ProtectedAccount](#output\_ProtectedAccount) | n/a |
+| <a name="output_ProtectedVPC"></a> [ProtectedVPC](#output\_ProtectedVPC) | n/a |
+| <a name="output_ScannerDeployedInSubnetID"></a> [ScannerDeployedInSubnetID](#output\_ScannerDeployedInSubnetID) | n/a |
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -17,4 +17,3 @@ output "IDSSecurityGroupID" {
 output "IDSDeployedInSubnetIDs" {
   value = var.ids_subnet_id
 }
-

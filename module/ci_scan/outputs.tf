@@ -17,4 +17,3 @@ output "CISecurityGroupID" {
 output "ScannerDeployedInSubnetID" {
   value = "${var.ci_subnet_id}/${var.ci_subnet_type}"
 }
-
