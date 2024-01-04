@@ -67,9 +67,6 @@ terraform {
 module "ci_scan" {
   source = "./module/ci_scan"
 
-  account_id          = var.account_id
-  deployment_id       = var.deployment_id
-  stack               = var.stack
   vpc_id              = var.vpc_id
   ci_subnet_id        = var.ci_subnet_id
   ci_subnet_type      = var.ci_subnet_type
@@ -81,8 +78,6 @@ module "ci_scan" {
 module "ids" {
   source = "./module/ids"
 
-  account_id           = var.account_id
-  deployment_id        = var.deployment_id
   create_ids           = var.create_ids
   vpc_id               = var.vpc_id
   ids_subnet_id        = var.ids_subnet_id
@@ -99,15 +94,6 @@ variable "aws_cred_file" {
 }
 
 variable "aws_region" {
-}
-
-variable "account_id" {
-}
-
-variable "deployment_id" {
-}
-
-variable "stack" {
 }
 
 variable "create_ids" {
@@ -142,14 +128,6 @@ variable "ids_instance_type" {
 }
 
 variable "ids_appliance_number" {
-}
-
-output ProtectedAccount {
-  value = module.ci_scan.ProtectedAccount
-}
-
-output ProtectedVPC {
-  value = module.ci_scan.ProtectedVPC
 }
 
 output ScannerDeployedInSubnetID {

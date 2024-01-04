@@ -1,11 +1,3 @@
-variable "account_id" {
-  description = "AlertLogic Account ID."
-}
-
-variable "deployment_id" {
-  description = "AlertLogic cloudinsight Deployment ID."
-}
-
 variable "vpc_id" {
   description = "Specify the VPC ID where the appliance will be deployed in."
 }
@@ -74,5 +66,5 @@ variable "aws_amis" {
 
 variable "internal" {
   description = "Internal tags for tracking deployment versions"
-  default     = "3.0.0"
+  default     = "v1.0.20"
 }

@@ -1,22 +1,10 @@
-variable "account_id" {
-  description = "AlertLogic Account ID."
-}
-
-variable "deployment_id" {
-  description = "AlertLogic cloudinsight Deployment ID."
-}
-
-variable "stack" {
-  description = "AlertLogic DataCenter where the appliance will be deployed in. Enter US or UK"
-  default     = "US"
-}
-
 variable "vpc_id" {
   description = "Specify the VPC ID where the appliance will be deployed in."
 }
 
 variable "ci_subnet_id" {
   description = "Specify the existing subnet ID where the Scanning appliance will be deployed in."
+  type = list(string)
 }
 
 variable "ci_subnet_type" {
@@ -71,18 +59,7 @@ variable "aws_amis" {
   }
 }
 
-variable "stack_vaporator" {
-  type = map(string)
-
-  default = {
-    "US.host" = "agentapi.cloudinsight.alertlogic.com"
-    "US.port" = "443"
-    "UK.host" = "agentapi.cloudinsight.alertlogic.co.uk"
-    "UK.port" = "443"
-  }
-}
-
 variable "internal" {
   description = "Internal tags for tracking deployment versions"
-  default     = "3.0.0"
+  default     = "v1.0.20"
 }

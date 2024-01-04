@@ -2,35 +2,32 @@
 data "aws_region" "current" {
 }
 
-// create launch configuration for the security appliances to be created
-resource "aws_launch_configuration" "ci_appliance_lc" {
-  name_prefix                 = "AlertLogic Security Launch Configuration ${var.account_id}/${var.deployment_id}/${var.vpc_id}_"
+// create launch template for the security appliances to be created
+resource "aws_launch_template" "ci_appliance_lt" {
+  name_prefix                 = "AlertLogic-Scan-Template-${var.vpc_id}"
   image_id                    = var.aws_amis[data.aws_region.current.name]
-  security_groups             = [aws_security_group.ci_appliance_sg.id]
+  network_interfaces {
+    security_groups           = [aws_security_group.ci_appliance_sg.id]
+    associate_public_ip_address = var.ci_subnet_type == "Public" ? true : false
+  }
   instance_type               = var.ci_instance_type
-  associate_public_ip_address = var.ci_subnet_type == "Public" ? true : false
-  user_data = templatefile("${path.module}/userdata.tpl",
-    {
-      stack_host    = var.stack_vaporator["${var.stack}.host"]
-      stack_port    = var.stack_vaporator["${var.stack}.port"]
-      account_id    = var.account_id
-      deployment_id = var.deployment_id
-    }
-  )
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
+
 // create ASG to have the specified amount of security appliances up and running using the created launch configuration
 resource "aws_autoscaling_group" "ci_appliance_asg" {
-  name                 = "AlertLogic Security Autoscaling Group ${var.account_id}/${var.deployment_id}/${var.vpc_id}"
+  name                 = "AlertLogic-Scan-ASG-${var.vpc_id}"
   max_size             = var.ci_appliance_number
   min_size             = var.ci_appliance_number
   desired_capacity     = var.ci_appliance_number
   force_delete         = true
-  launch_configuration = aws_launch_configuration.ci_appliance_lc.name
+  launch_template {
+    name               = aws_launch_template.ci_appliance_lt.name
+  } 
   vpc_zone_identifier  = [var.ci_subnet_id]
 
   lifecycle {
@@ -44,22 +41,12 @@ resource "aws_autoscaling_group" "ci_appliance_asg" {
       propagate_at_launch = "true"
     },
     {
-      key                 = "AlertLogic-AccountID"
-      value               = var.account_id
-      propagate_at_launch = "true"
-    },
-    {
-      key                 = "AlertLogic-EnvironmentID"
-      value               = var.deployment_id
-      propagate_at_launch = "true"
-    },
-    {
       key                 = "AlertLogic"
       value               = "Security"
       propagate_at_launch = "true"
     },
     {
-      key                 = "Alertlogic CI Scan Appliance Manual Mode Template Version"
+      key                 = "AlertLogic Scan Manual Mode Template Version"
       value               = var.internal
       propagate_at_launch = "true"
     }
@@ -68,16 +55,9 @@ resource "aws_autoscaling_group" "ci_appliance_asg" {
 
 // create security group to allow security appliance traffic to flow outbound to any destination IP on specific ports. In general, it will have no rules, which basically allows all traffic outbound but is resitricted to specific ports required for communication
 resource "aws_security_group" "ci_appliance_sg" {
-  name        = "AlertLogic Security Group ${var.account_id}/${var.deployment_id}/${var.vpc_id}"
-  description = "AlertLogic Security Group"
+  name        = "AlertLogic Scan Security Group - ${var.vpc_id}"
+  description = "AlertLogic Scan Security Group"
   vpc_id      = var.vpc_id
-
-  egress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   egress {
     from_port   = 53
@@ -90,13 +70,6 @@ resource "aws_security_group" "ci_appliance_sg" {
     from_port   = 53
     to_port     = 53
     protocol    = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -115,9 +88,7 @@ resource "aws_security_group" "ci_appliance_sg" {
   }
 
   tags = {
-    "Name"                                                      = "AlertLogic Security Group"
-    "AlertLogic-AccountID"                                      = var.account_id
-    "AlertLogic-EnvironmentID"                                  = var.deployment_id
+    "Name"                                                      = "AlertLogic Scan Security Group - ${var.vpc_id}"
     "AlertLogic"                                                = "Security"
     "Alertlogic CI Scan Appliance Manual Mode Template Version" = var.internal
   }

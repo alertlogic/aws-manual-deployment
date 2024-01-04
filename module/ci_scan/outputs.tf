@@ -1,7 +1,3 @@
-output "ProtectedAccount" {
-  value = "${var.account_id}/${var.deployment_id}"
-}
-
 output "ProtectedVPC" {
   value = var.vpc_id
 }
