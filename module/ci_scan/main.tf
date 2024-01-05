@@ -28,7 +28,7 @@ resource "aws_autoscaling_group" "ci_appliance_asg" {
   launch_template {
     name               = aws_launch_template.ci_appliance_lt.name
   } 
-  vpc_zone_identifier  = [var.ci_subnet_id]
+  vpc_zone_identifier  = var.ci_subnet_id[*]
 
   lifecycle {
     create_before_destroy = true

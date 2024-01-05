@@ -130,13 +130,13 @@ variable "ids_instance_type" {
 variable "ids_appliance_number" {
 }
 
-output ScannerDeployedInSubnetID {
-  value = module.ci_scan.ScannerDeployedInSubnetID
-}
+#output ScannerDeployedInSubnetID {
+#  value = module.ci_scan.ScannerDeployedInSubnetID
+#}
 
-output IDSDeployedInSubnetIDs {
-  value = module.ids.IDSDeployedInSubnetIDs
-}
+#output IDSDeployedInSubnetIDs {
+#  value = module.ids.IDSDeployedInSubnetIDs
+#}
 
 output NumberOfSecurityAppliancesDeployed {
   value = module.ci_scan.NumberOfSecurityAppliancesDeployed

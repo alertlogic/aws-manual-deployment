@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "ids_appliance_asg" {
   launch_template {
     name               = aws_launch_template.ids_appliance_lt[0].name
   }
-  vpc_zone_identifier  = [var.ids_subnet_id]
+  vpc_zone_identifier  = var.ids_subnet_id[*]
 
   lifecycle {
     create_before_destroy = true

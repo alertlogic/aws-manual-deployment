@@ -10,7 +10,7 @@ output "IDSSecurityGroupID" {
   value = aws_security_group.ids_appliance_sg.*.id
 }
 
-output "IDSDeployedInSubnetIDs" {
-  value = var.ids_subnet_id
-}
+#output "IDSDeployedInSubnetIDs" {
+#  value = var.ids_subnet_id
+#}
 
