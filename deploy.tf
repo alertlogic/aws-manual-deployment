@@ -106,6 +106,7 @@ variable "vpc_cidr" {
 }
 
 variable "ci_subnet_id" {
+  type = list(string)
 }
 
 variable "ids_subnet_id" {
