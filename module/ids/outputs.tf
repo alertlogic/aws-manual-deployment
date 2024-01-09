@@ -1,7 +1,3 @@
-output "ProtectedAccount" {
-  value = "${var.account_id}/${var.deployment_id}"
-}
-
 output "ProtectedVPC" {
   value = var.vpc_id
 }
@@ -11,10 +7,10 @@ output "NumberOfIDSAppliancesDeployed" {
 }
 
 output "IDSSecurityGroupID" {
-  value = aws_security_group.ids_appliance_sg.*.id
+  value = aws_cloudformation_stack.idsappliance.outputs["SecurityGroupId"]
 }
 
 output "IDSDeployedInSubnetIDs" {
-  value = var.ids_subnet_id
+  value = "${var.ids_subnet_id}/${var.ids_subnet_type}"
 }
 
