@@ -1,7 +1,3 @@
-output "ProtectedAccount" {
-  value = "${var.account_id}/${var.deployment_id}"
-}
-
 output "ProtectedVPC" {
   value = var.vpc_id
 }
@@ -11,7 +7,7 @@ output "NumberOfSecurityAppliancesDeployed" {
 }
 
 output "CISecurityGroupID" {
-  value = aws_security_group.ci_appliance_sg.id
+  value = aws_cloudformation_stack.scanappliance.outputs["SecurityGroupId"]
 }
 
 output "ScannerDeployedInSubnetID" {
