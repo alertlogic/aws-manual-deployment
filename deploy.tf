@@ -76,10 +76,6 @@ output ProtectedVPC {
   value = module.ci_scan.ProtectedVPC
 }
 
-output NumberOfSecurityAppliancesDeployed {
-  value = module.ci_scan.NumberOfSecurityAppliancesDeployed
-}
-
 output CISecurityGroupID {
   value = module.ci_scan.CISecurityGroupID
 }
