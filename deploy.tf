@@ -22,7 +22,6 @@ module "ci_scan" {
   ci_subnet_id        = var.ci_subnet_id
   ci_subnet_type      = var.ci_subnet_type
   ci_instance_type    = var.ci_instance_type
-  ci_appliance_number = var.ci_appliance_number
 }
 
 module "ids" {
@@ -62,9 +61,6 @@ variable "ids_subnet_type" {
 
 variable "ci_instance_type" {
     default = "c5.large"
-}
-
-variable "ci_appliance_number" {
 }
 
 variable "ids_subnet_id" {
