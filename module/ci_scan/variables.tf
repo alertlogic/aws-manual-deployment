@@ -17,8 +17,3 @@ variable "ci_subnet_type" {
 variable "ci_instance_type" {
   description = "AlertLogic Security Appliance EC2 instance type."
 }
-
-variable "ci_appliance_number" {
-  description = "Number of appliances to be deployed set by the Autoscaling group."
-  default     = "1"
-}
