@@ -3,7 +3,7 @@ resource "aws_cloudformation_stack" "idsappliance" {
   parameters = {
         VpcId = var.vpc_id
         VpcCidr = var.vpc_cidr
-        SubnetId = var.ids_subnet_id
+        SubnetId = join(",", var.ids_subnet_id[*])
         AssignPublicIp = var.ids_subnet_type == "Public" ? true : false
         InstanceType = var.ids_instance_type
         NumAppliances = var.ids_appliance_number
