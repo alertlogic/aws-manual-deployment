@@ -51,6 +51,7 @@ variable "vpc_cidr" {
 }
 
 variable "ci_subnet_id" {
+  type = list(string)
 }
 
 variable "ci_subnet_type" {
@@ -64,7 +65,9 @@ variable "ci_instance_type" {
 }
 
 variable "ids_subnet_id" {
+  type = list(string)
 }
+
 variable "ids_instance_type" {
   default = "c5.xlarge"
 }

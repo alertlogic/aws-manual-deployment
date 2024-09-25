@@ -3,7 +3,7 @@ resource "aws_cloudformation_stack" "scanappliance" {
   parameters = {
         VpcId = var.vpc_id
         VpcCidr = var.vpc_cidr
-        SubnetId = var.ci_subnet_id
+        SubnetId = join(",", var.ci_subnet_id[*])
         AssignPublicIp = var.ci_subnet_type == "Public" ? true : false
         InstanceType = var.ci_instance_type
   }

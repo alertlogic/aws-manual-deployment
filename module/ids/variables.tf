@@ -7,7 +7,8 @@ variable "vpc_cidr" {
 }
 
 variable "ids_subnet_id" {
-  description = "Specify a list of existing subnet ID's where the IDS appliance(s) will be deployed in."
+  description = "Specify the existing subnet ID(s) where the appliance will be deployed in."
+  type        = list(string)
 }
 
 variable "ids_subnet_type" {
