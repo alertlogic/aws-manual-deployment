@@ -79,22 +79,7 @@ output ProtectedVPC {
   value = module.ci_scan.ProtectedVPC
 }
 
-output CISecurityGroupID {
-  value = module.ci_scan.CISecurityGroupID
-}
-
-output ScannerDeployedInSubnetID {
-  value = module.ci_scan.ScannerDeployedInSubnetID
-}
-
 output NumberOfIDSAppliancesDeployed {
   value = module.ids.NumberOfIDSAppliancesDeployed
 }
 
-output IDSSecurityGroupID {
-  value = module.ids.IDSSecurityGroupID
-}
-
-output IDSDeployedInSubnetIDs {
-  value = module.ids.IDSDeployedInSubnetIDs
-}
