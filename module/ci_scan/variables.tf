@@ -8,6 +8,7 @@ variable "vpc_cidr" {
 
 variable "ci_subnet_id" {
   description = "Specify the existing subnet ID where the Scanning appliance will be deployed in."
+  type = list(string)
 }
 
 variable "ci_subnet_type" {
